@@ -33,9 +33,10 @@ Version 2.3 keeps the construction model from 2.2: a composition hierarchy, a 4 
 
 ### Version 2.2 approved decisions
 
+Where these conflict with 2.3, 2.3 wins. Hybrid domain shelves (Base / Product / Marketing) were dropped in 2.3; composition level remains mandatory.
+
 - Keep `4 px` as the structural grid and allow a tokenized `2 px` micro-grid only for small internal details.
 - Keep percentage line height and percentage letter spacing mandatory in Figma.
-- Use hybrid file classification: domain placement plus composition level.
 - Allow named functional empty Frames only for approved structural responsibilities.
 - Require Primitive, Semantic, and Component as logical token layers while allowing project-specific physical collection layouts.
 - Audit file scale first, then ask the owner whether Examples and Templates remain in the system file or move to a separate file.
@@ -128,7 +129,7 @@ If a policy answer cannot be obtained, document the temporary assumption. Do not
 
 ## 3. Project configuration template
 
-Fill this block from the file under review. Empty strings, empty arrays, and `null` mean "not yet inspected". Do not copy the example values below into a real review.
+Fill this block from the file under review. Empty strings, empty arrays, and `null` mean "not yet inspected". Do not fill it from this skill or from another kit.
 
 ```yaml
 projectName: ""
@@ -176,17 +177,7 @@ Fields filled from inspection: `projectName`, `figmaFile`, `publishedLibrary`, `
 
 Ask the owner only when the file cannot answer: `repairRequested`, `allowedBreakingChanges`, `codeFramework` if a code map is requested, `examplesAndTemplatesLocation` after measuring the file, `approvedExceptions`.
 
-`baseGeometryUnit`, `microGeometryUnit`, `tokenLayers`, `componentComplexityLimit`, `accessibilityTarget`, and `platform: web` are standard rules, not facts copied from an example file.
-
-Example-only values from the file used while writing this guide — never treat them as the review target:
-
-- Platform: Web.
-- Modes found: Light and Dark.
-- Font: Inter.
-- Frames: 1440 px and 390 px.
-- Color scale: 50–950.
-- Density: one.
-- Icon master: 24 × 24 px.
+`baseGeometryUnit`, `microGeometryUnit`, `tokenLayers`, `componentComplexityLimit`, `accessibilityTarget`, and `platform: web` are standard rules, not facts copied from a sample file. Do not paste a font, frame width, or color scale from this document into a real review.
 
 ## 4. Figma file architecture
 
@@ -779,7 +770,7 @@ Before publication, test:
 This is a web product. Desktop and mobile frames are responsive web viewports. Do not review the file as iOS or Android. Do not apply HIG, Material, pt, or dp rules. Missing native-platform modes is not a defect.
 
 - Primary reference frames come from the file under review: existing desktop and mobile frames, constraints, and width or container tokens.
-- The guide's example file used 1440 px and 390 px. That pair is not a default to impose. Record whatever frames the project already uses. A 390 px frame is mobile web.
+- Record whatever frames the project already uses. Do not impose a desktop width from this skill. A 390 px frame is mobile web.
 - Tablet is optional unless the product already has tablet frames or breakpoints.
 - If the file already demonstrates wider layouts, record those widths. Do not add 1920 px or 2560 px frames during review unless they already exist or the owner asks for that repair.
 - Use Auto Layout sizing, min/max constraints, wrapping, and responsive token decisions rather than duplicated arbitrary frames.

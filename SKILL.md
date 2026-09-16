@@ -24,8 +24,8 @@ Full quality bar: [references/design-system-rules.md](references/design-system-r
 - No Figma plugin/MCP (or equivalent live inspect): stop. Ask for file access. Do not review from memory, another UI kit, or screenshots alone.
 - Never recreate the file from scratch because it looks messy.
 - Default is read-only **Gate A**. Repair (Gates B–E) only if the owner sets `repairRequested: true` after the audit.
-- Do not invent Marketing / Base / Product shelves, `Platform=iOS`, Code Connect, 21st.dev, Sepia, Inter, 1440, or `50–950`.
-- Do not interview for facts visible in the file. Fill YAML from inspection. Empty fields mean not yet inspected.
+- Do not invent Base / Product / Marketing shelves or native platform modes. Do not require Code Connect.
+- Do not interview for facts visible in the file. Fill YAML from inspection. Do not paste fonts, frame widths, or color scales from this skill. Empty fields mean not yet inspected.
 - Do not pass contrast or hit-area by eye. Unmeasured pairs/frames are `unverified`.
 - Do not fail the library on APCA, missing Code Connect, missing screenshots, or unknown external consumers.
 - Do not claim a license was verified.
@@ -45,6 +45,8 @@ Full quality bar: [references/design-system-rules.md](references/design-system-r
 If repair is approved, follow Gates B–E in the standard. One family at a time. Foundations before dependents. Last validated system must stay usable.
 
 ## Audit output
+
+Shape only: [references/audit-output.example.md](references/audit-output.example.md). Copy the sections, not the fake findings.
 
 ```text
 File / library

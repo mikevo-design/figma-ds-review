@@ -65,6 +65,7 @@ figma-ds-review/
 ├── agents/openai.yaml                    Codex display metadata
 ├── references/design-system-rules.md     Quality bar (v2.3)
 ├── references/family-exemplar-action.md  Worked decision card
+├── references/audit-output.example.md    Gate A report shape
 └── scripts/contrast.mjs                  WCAG 2 contrast CLI
 ```
 
