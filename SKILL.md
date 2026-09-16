@@ -21,7 +21,7 @@ Full quality bar: [references/design-system-rules.md](references/design-system-r
 
 ## Hard stops
 
-- No Figma plugin/MCP (or equivalent live inspect): stop. Ask for file access. Do not review from memory, Untitled UI, or screenshots alone.
+- No Figma plugin/MCP (or equivalent live inspect): stop. Ask for file access. Do not review from memory, another UI kit, or screenshots alone.
 - Never recreate the file from scratch because it looks messy.
 - Default is read-only **Gate A**. Repair (Gates B–E) only if the owner sets `repairRequested: true` after the audit.
 - Do not invent Marketing / Base / Product shelves, `Platform=iOS`, Code Connect, 21st.dev, Sepia, Inter, 1440, or `50–950`.
@@ -61,4 +61,4 @@ Severity: use evidence. A broken alias or missing focus state outranks a page-na
 
 ## Do not load
 
-Do not copy Untitled UI APIs, paddings, or variant matrices into the reviewed file. Do not run a prose-writing skill as part of Definition of Done.
+Do not copy a third-party kit’s APIs, paddings, or variant matrices into the reviewed file. Do not run a prose-writing skill as part of Definition of Done.

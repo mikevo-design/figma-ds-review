@@ -24,7 +24,7 @@ Version 2.3 keeps the construction model from 2.2: a composition hierarchy, a 4 
 - Keep the working project YAML empty and fill it from inspection. Numbers from the guide's example file must not appear as defaults.
 - Score every public interactive family with the Figma accessibility checklist in Section 13.1. Do not expand this standard into ARIA or screen-reader implementation.
 - Gate A is the review. Gates B–E run only when the owner sets `repairRequested: true`.
-- This standard reviews one product design system. Do not require Untitled-style domain shelves such as Base, Product, or Marketing. Composition level is mandatory; file pages follow the actual library.
+- This standard reviews one product design system. Do not require domain shelves such as Base, Product, or Marketing. Composition level is mandatory; file pages follow the actual library.
 - This standard is Web only. Do not apply iOS HIG or Android Material constraints. Do not invent `Platform=iOS` or `Platform=Android` modes. A 390 px frame is mobile web unless the file already names a native platform mode.
 - Contrast gate is WCAG 2.2 AA using the same luminance-ratio method as Figma's built-in contrast checker: 4.5:1 normal text, 3:1 large text, 3:1 non-text UI. Do not fail a review on APCA. Do not pass contrast by eye. Unmeasured pairs are `unverified`.
 - Hit area: below 24 × 24 px is a fail. Primary controls on mobile web should be 44 × 44 px. Dense desktop-only controls may stay at 24 × 24 px when that exception is recorded. Measure the component frame, not the glyph. Unmeasured sizes are `unverified`.
@@ -1130,8 +1130,7 @@ Use this block only when `repairRequested: true`. A repair is complete when:
 ## 18. References used to form this standard
 
 - Plane documentation: Figma working rules, Variables, references, and icon guidance.
-- Untitled UI FREE Figma UI kit and design system v2.0.
-- Untitled UI Figma PRO VARIABLES v8.0, audited as a scale and composition reference; its large variant matrices, mixed naming, missing metadata, and raw-value exceptions are not adopted automatically.
+- Commercial Figma UI kits were used as scale and composition references during drafting. Their large variant matrices, mixed naming, missing metadata, and raw-value exceptions are not adopted automatically.
 - The validated reference Figma implementation created for this guide.
 - Figma Components collection: component properties, variants, nested instances, Slots, Interactive Components, and component management.
 - Material Design 3 interaction-state model.

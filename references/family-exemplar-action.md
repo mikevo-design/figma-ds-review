@@ -5,7 +5,7 @@ description: Pedagogical decision chain for one Atom family. Not a privileged Bu
 
 # Family exemplar: Action
 
-Use this to see how the standard’s decisions sit on one family. Then write the same card for the family in the **reviewed file**. Do not copy names, axes, or values from Untitled UI or from this example into that file.
+Use this to see how the standard’s decisions sit on one family. Then write the same card for the family in the **reviewed file**. Do not copy names, axes, or values from a third-party kit or from this example into that file.
 
 ## Decision card (pattern)
 

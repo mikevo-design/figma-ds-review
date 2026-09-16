@@ -4,6 +4,8 @@
 
 First public release of the skill pack.
 
+- Drop named third-party kit citations. The no-copy rule stays: inspect the file; do not import another kit’s API.
+
 - Review-existing workflow only. No blank-file bootstrap.
 - Web-only quality bar. 390 px is mobile web, not iOS.
 - Live Figma inspect is required. Screenshots are optional.
