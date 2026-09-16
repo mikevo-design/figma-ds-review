@@ -4,7 +4,7 @@
 [![Standard](https://img.shields.io/badge/standard-v2.3-111111)](references/design-system-rules.md)
 [![Agent Skills](https://img.shields.io/badge/Agent_Skills-compatible-0A0A0A)](https://agentskills.io)
 
-Agent skill that **reviews an existing web product design system in Figma**. One pack for Cursor, Codex, and Claude — not three rewritten philosophies.
+Agent skill that reviews an existing web product design system in Figma against a migration-safe quality bar. One pack for Cursor, Codex, and Claude — not three rewritten philosophies.
 
 ## What it does
 
@@ -37,7 +37,7 @@ Review this Figma design-system file with figma-ds-review.
 Inspect via Figma MCP. Gate A only unless I ask to repair.
 ```
 
-Hard stops are in [`SKILL.md`](SKILL.md). Before scoring a component family, the agent should read [`references/family-exemplar-action.md`](references/family-exemplar-action.md) as a *decision pattern*, not as a Button spec. The file under review wins.
+Hard stops and load map are in [`SKILL.md`](SKILL.md). On Gate A the agent classifies composition (`Primitive` → `Page`) and can recommend Variable naming; it does not assemble a new library. Before scoring a family, the agent should read [`references/family-exemplar-action.md`](references/family-exemplar-action.md) as a *decision pattern*, not as a Button spec. The file under review wins.
 
 ## Contrast
 
@@ -61,7 +61,8 @@ Requires Node.js 18+.
 
 ```text
 figma-ds-review/
-├── SKILL.md                              Agent contract
+├── SKILL.md                              Agent contract and load map
+├── AGENTS.md                             How to edit this pack
 ├── agents/openai.yaml                    Codex display metadata
 ├── references/design-system-rules.md     Quality bar (v2.3)
 ├── references/family-exemplar-action.md  Worked decision card

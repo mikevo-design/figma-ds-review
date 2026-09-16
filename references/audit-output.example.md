@@ -37,9 +37,9 @@ Empty fields mean not yet inspected.
 
 | Family / foundation | Severity | Evidence | Standard |
 | --- | --- | --- | --- |
-| Color / `text-muted` on `surface` | fail | `scripts/contrast.mjs '#9ca3af' '#ffffff'` → 2.54:1, threshold 4.5:1 | §13.0 |
-| Action | high | Hover and Pressed exist only as hidden trees inside Default | §7.3 / §11 |
-| Spacing | medium | Several Auto Layout gaps are raw `18`; no spacing token | §5 |
+| Color / `text-muted` on `surface` | HIGH | Node `Semantic/text-muted`; `scripts/contrast.mjs '#9ca3af' '#ffffff'` → 2.54:1, threshold 4.5:1 | §13.0 |
+| Action | HIGH | Set `Action`, variant Default: Hover and Pressed exist only as hidden trees | §7.3 / §11 |
+| Spacing | MEDIUM | Auto Layout gaps on `Action` root are raw `18`; no spacing token | §5 |
 
 ## Contrast table
 

@@ -1,7 +1,9 @@
 interface:
   display_name: Figma DS Review
-  short_description: Review an existing web Figma design system
+  short_description: >-
+    Review an existing web product design system in Figma against a
+    migration-safe quality bar.
   default_prompt: >-
     Review the current Figma design-system file with figma-ds-review.
     Inspect via Figma MCP. Gate A only unless I ask to repair.
-    Use references/design-system-rules.md and scripts/contrast.mjs.
+    Load standard sections by task. Use scripts/contrast.mjs for contrast.
