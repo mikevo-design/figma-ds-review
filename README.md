@@ -6,10 +6,6 @@
 
 Agent skill that **reviews an existing web product design system in Figma**. One pack for Cursor, Codex, and Claude — not three rewritten philosophies.
 
-Live Figma inspect (plugin or MCP) is the source of truth. Screenshots are optional evidence, not a gate.
-
-> This is a review spec, not a starter kit. It does not bootstrap a blank file, apply iOS HIG, or apply Android Material.
-
 ## What it does
 
 1. Inspects the connected Figma file.
