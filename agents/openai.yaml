@@ -1,0 +1,7 @@
+interface:
+  display_name: Figma DS Review
+  short_description: Review an existing web Figma design system
+  default_prompt: >-
+    Review the current Figma design-system file with figma-ds-review.
+    Inspect via Figma MCP. Gate A only unless I ask to repair.
+    Use references/design-system-rules.md and scripts/contrast.mjs.
