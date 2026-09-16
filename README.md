@@ -1,47 +1,57 @@
 # figma-ds-review
 
-Одно ядро правил для ревью **существующей веб** design system в Figma. Не три разных skill под Cursor / Codex / Claude: одни и те же файлы, разные папки установки.
+[![License: MIT](https://img.shields.io/github/license/mikevo-design/figma-ds-review)](LICENSE)
+[![Standard](https://img.shields.io/badge/standard-v2.3-111111)](references/design-system-rules.md)
+[![Agent Skills](https://img.shields.io/badge/Agent_Skills-compatible-0A0A0A)](https://agentskills.io)
 
-Канон: [`references/design-system-rules.md`](references/design-system-rules.md) (v2.3).  
-Вход в файл — Figma plugin / MCP. Скриншоты не обязательны.
+Agent skill that **reviews an existing web product design system in Figma**. One pack for Cursor, Codex, and Claude — not three rewritten philosophies.
 
-## Установка
+Live Figma inspect (plugin or MCP) is the source of truth. Screenshots are optional evidence, not a gate.
 
-Склонируйте репозиторий и скопируйте папку (или сделайте symlink) в skill-root агента.
+> This is a review spec, not a starter kit. It does not bootstrap a blank file, apply iOS HIG, or apply Android Material.
 
-**Cursor** — личный skill:
+## What it does
+
+1. Inspects the connected Figma file.
+2. Fills project YAML from the file (`workflowMode: review-existing`, `platform: web`).
+3. Runs **Gate A** (read-only audit) against [references/design-system-rules.md](references/design-system-rules.md).
+4. Measures contrast with [scripts/contrast.mjs](scripts/contrast.mjs) or Figma’s built-in WCAG checker.
+5. Stops. Repair (Gates B–E) starts only after an explicit request.
+
+## Install
+
+Clone this repository and copy — or symlink — the folder into the agent’s skill root. Keep `SKILL.md`, `references/`, `scripts/`, and `agents/` together.
+
+| Agent | Path |
+| --- | --- |
+| Cursor | `~/.cursor/skills/figma-ds-review/` |
+| Codex | `~/.codex/skills/figma-ds-review/` |
+| Claude | `~/.claude/skills/figma-ds-review/` |
+
+Do not install into `~/.cursor/skills-cursor/` — that directory is reserved for Cursor’s built-in skills.
+
+Restart the agent if the skill does not appear.
+
+## Use
+
+Ask the agent to audit the open Figma design-system file. Typical prompt:
 
 ```text
-~/.cursor/skills/figma-ds-review/
+Review this Figma design-system file with figma-ds-review.
+Inspect via Figma MCP. Gate A only unless I ask to repair.
 ```
 
-**Codex:**
+Hard stops are in [`SKILL.md`](SKILL.md). Before scoring a component family, the agent should read [`references/family-exemplar-action.md`](references/family-exemplar-action.md) as a *decision pattern*, not as a Button spec. The file under review wins.
 
-```text
-~/.codex/skills/figma-ds-review/
-```
+## Contrast
 
-**Claude:** каталог skills вашего Claude-окружения, например:
+WCAG 2.2 AA, same relative-luminance method as Figma’s color picker. Unmeasured pairs are `unverified`. APCA does not fail a review.
 
-```text
-~/.claude/skills/figma-ds-review/
-```
-
-Внутри должны быть `SKILL.md`, `references/`, `scripts/`, `agents/`. Не кладите копию в `~/.cursor/skills-cursor/` — это служебная папка Cursor.
-
-После копирования перезапустите агент / Codex, если skill не подхватился.
-
-## Что внутри
-
-| Файл | Зачем |
-|---|---|
-| `SKILL.md` | Контракт агента: hard stops, Gate A, формат аудита |
-| `references/design-system-rules.md` | Полный quality bar |
-| `references/family-exemplar-action.md` | Образец *решения* на семье Action, не спецификация кнопки |
-| `scripts/contrast.mjs` | WCAG 2 contrast ratio, тот же метод, что у Figma color picker |
-| `agents/openai.yaml` | Подписи для Codex |
-
-## Контраст
+| Kind | Threshold |
+| --- | --- |
+| Normal text | 4.5:1 |
+| Large text | 3:1 |
+| Non-text UI | 3:1 |
 
 ```bash
 node scripts/contrast.mjs '#6b7280' '#ffffff'
@@ -49,10 +59,31 @@ node scripts/contrast.mjs 6b7280 ffffff large
 node scripts/contrast.mjs 6b7280 ffffff ui
 ```
 
-Пороги AA: обычный текст 4.5:1, крупный текст и UI 3:1. Не измеряли — `unverified`. APCA не валит ревью.
+Requires Node.js 18+.
 
-## Поведение
+## Layout
 
-- Только review существующего файла. С нуля не собираем.
-- Repair — только после явной просьбы.
-- Web only. 390 px — mobile web, не iOS.
+```text
+figma-ds-review/
+├── SKILL.md                              Agent contract
+├── agents/openai.yaml                    Codex display metadata
+├── references/design-system-rules.md     Quality bar (v2.3)
+├── references/family-exemplar-action.md  Worked decision card
+└── scripts/contrast.mjs                  WCAG 2 contrast CLI
+```
+
+## Policy
+
+- Review the file that exists. Do not recreate it from scratch because it looks messy.
+- Web only. A 390 px frame is mobile web, not iOS.
+- Do not pass contrast or hit area by eye.
+- Hit area is the **component frame**, not the glyph: below 24×24 px fails; primary mobile-web controls should be 44×44 px.
+- Unknown external consumers are not a finding.
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md). Security reports: [SECURITY.md](SECURITY.md).
+
+## License
+
+[MIT](LICENSE). Figma is a trademark of Figma, Inc. This project is not affiliated with Figma.

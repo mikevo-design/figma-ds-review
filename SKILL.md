@@ -5,6 +5,12 @@ description: >-
   quality bar. Use when the user asks to audit, review, or score a Figma library,
   Variables, components, tokens, Auto Layout, or design-system file — not when
   creating a blank design system from scratch.
+license: MIT
+compatibility: Requires live Figma inspect (plugin or MCP). Node.js 18+ for scripts/contrast.mjs.
+metadata:
+  version: "2.3"
+  author: mikevo-design
+  standard: references/design-system-rules.md
 ---
 
 # Figma DS review
