@@ -4,7 +4,7 @@
 [![Standard](https://img.shields.io/badge/standard-v2.3-111111)](references/design-system-rules.md)
 [![Agent Skills](https://img.shields.io/badge/Agent_Skills-compatible-0A0A0A)](https://agentskills.io)
 
-Agent skill that reviews an existing web product design system in Figma against a migration-safe quality bar. One pack for Cursor, Codex, and Claude — not three rewritten philosophies.
+Agent skill that reviews an existing design system in Figma against a migration-safe quality bar. One pack for Cursor, Codex, and Claude.
 
 ## What it does
 
