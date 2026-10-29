@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/logo.png" alt="figma-ds-review" width="120">
+</p>
+
 # figma-ds-review
 
 [![License: MIT](https://img.shields.io/github/license/mikevo-design/figma-ds-review)](LICENSE)
