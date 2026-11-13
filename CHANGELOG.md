@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.4 — 2026-11-13
+
+- Contrast CLI accepts `#RRGGBBAA` and `#RGBA`. A translucent foreground is composited (straight-alpha source-over) over the background. The background must be opaque; a translucent background is an input error. The ratio uses the unrounded composite.
+- Input errors exit 2 with a one-line message and no stack trace. Exit 1 stays a measured contrast fail. Exit 0 is a pass. An input error is not a HIGH contrast finding.
+- Large text is ≥24 px regular (18 pt) or ≥18.66 px bold (14 pt). The previous ≥18.5 px bold cutoff was wrong. The 3:1 AA gate is unchanged.
+- Target size follows WCAG 2.2 SC 2.5.8. Under 24×24 px is not an automatic HIGH fail. Spacing (24 px-diameter circles must not intersect), inline, essential, and equivalent are exceptions. A 20×20 icon button with confirmed spacing is not HIGH. Unconfirmed spacing is `unverified` and at most MEDIUM.
+- Contrast CI runs on Node.js 18, 20, and 22.
+
 ## 2.3 — 2026-09-16
 
 First public release of the skill pack.

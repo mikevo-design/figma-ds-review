@@ -5,7 +5,7 @@
 # figma-ds-review
 
 [![License: MIT](https://img.shields.io/github/license/mikevo-design/figma-ds-review)](LICENSE)
-[![Standard](https://img.shields.io/badge/standard-v2.3-111111)](references/design-system-rules.md)
+[![Standard](https://img.shields.io/badge/standard-v2.4-111111)](references/design-system-rules.md)
 [![Agent Skills](https://img.shields.io/badge/Agent_Skills-compatible-0A0A0A)](https://agentskills.io)
 
 Agent skill that reviews an existing design system in Figma against a migration-safe quality bar. One pack for Cursor, Codex, and Claude.
@@ -50,16 +50,27 @@ WCAG 2.2 AA, same relative-luminance method as Figma’s color picker. Unmeasure
 | Kind | Threshold |
 | --- | --- |
 | Normal text | 4.5:1 |
-| Large text | 3:1 |
+| Large text (≥24 px / 18 pt regular, or ≥18.66 px / 14 pt bold) | 3:1 |
 | Non-text UI | 3:1 |
+
+`#RGB`, `#RGBA`, `#RRGGBB`, and `#RRGGBBAA` are accepted (`#` optional). Alpha is the last byte, not Android `#AARRGGBB`. A translucent foreground is composited with straight-alpha source-over onto the background before the ratio. The background must be opaque; flatten a translucent surface over the next opaque layer first. `ratio` uses the unrounded composite. When present, `compositedFg` is only the nearest `#rrggbb`.
 
 ```bash
 node scripts/contrast.mjs '#6b7280' '#ffffff'
 node scripts/contrast.mjs 6b7280 ffffff large
 node scripts/contrast.mjs 6b7280 ffffff ui
+node scripts/contrast.mjs '#11111180' '#ffffff'
 ```
 
-Requires Node.js 18+.
+Exit codes:
+
+| Code | Meaning |
+| --- | --- |
+| 0 | Measured pair meets the threshold |
+| 1 | Measured pair is below the threshold (a contrast fail) |
+| 2 | Input error: usage, unknown kind, invalid color, or a translucent background. Not a contrast finding |
+
+Requires Node.js 18+. CI runs the contrast tests on Node.js 18, 20, and 22.
 
 ## Layout
 
@@ -68,7 +79,7 @@ figma-ds-review/
 ├── SKILL.md                              Agent contract and load map
 ├── AGENTS.md                             How to edit this pack
 ├── agents/openai.yaml                    Codex display metadata
-├── references/design-system-rules.md     Quality bar (v2.3)
+├── references/design-system-rules.md     Quality bar (v2.4)
 ├── references/family-exemplar-action.md  Worked decision card
 ├── references/audit-output.example.md    Gate A report shape
 └── scripts/contrast.mjs                  WCAG 2 contrast CLI
@@ -79,7 +90,7 @@ figma-ds-review/
 - Review the file that exists. Do not recreate it from scratch because it looks messy.
 - Web only. A 390 px frame is mobile web, not iOS.
 - Do not pass contrast or hit area by eye.
-- Hit area is the **component frame**, not the glyph: below 24×24 px fails; primary mobile-web controls should be 44×44 px.
+- Hit area is the **component frame**, not the glyph (WCAG 2.5.8). Below 24×24 px fails unless spacing (a 24 px-diameter circle centered on the target does not intersect another target), inline, essential, or equivalent applies. A 20×20 icon button with confirmed spacing is not HIGH. Unconfirmed spacing is `unverified` and at most MEDIUM. Primary mobile-web controls should be 44×44 px.
 - Unknown external consumers are not a finding.
 
 ## Contributing

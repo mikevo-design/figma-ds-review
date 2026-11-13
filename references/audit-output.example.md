@@ -51,8 +51,10 @@ Empty fields mean not yet inspected.
 
 ## Hit-area notes
 
-- Action (label): 40×40 on the 390 frame — fail vs 44×44 primary mobile web.
+- Action (label): 40×40 on the 390 frame — below 44×44 primary mobile web (MEDIUM; the 24×24 gate still holds).
 - Icon-only toolbar on desktop page: 24×24 — allowed only if documented as desktop-only density.
+- Icon button 20×20, 24 px circles do not intersect neighbors — spacing exception, not HIGH.
+- Icon button 20×20, gap not measured — unverified, not HIGH.
 
 ## Unverified checks
 

@@ -36,13 +36,17 @@ States (only what this Atom needs)
 - focus is not a restyle of hover
 
 Hit area
-- Measure the root frame
-- Icon Action on mobile web: 44×44
+- Measure the root frame (WCAG 2.5.8)
+- Under 24×24: pass when a 24 px-diameter circle centered on the frame does not intersect another target or another undersized target's circle, or the control is inline, essential, or equivalent
+- If that spacing is not measured: unverified, not HIGH
+- Icon Action on mobile web: 44×44 (MEDIUM when 24×24 or an exception still holds)
 - Dense desktop toolbar: 24×24 only if documented
 
 Contrast
 - Measure label, icon, border, focus ring vs actual background in Light and Dark
-- WCAG 2.2 AA via scripts/contrast.mjs
+- Semi-transparent foreground: composite over the opaque background, then measure
+- WCAG 2.2 AA via scripts/contrast.mjs (exit 2 is bad input, not a contrast fail)
+- Large text: ≥24 px / 18 pt regular, or ≥18.66 px / 14 pt bold, at 3:1
 ```
 
 ## Antipatterns this exemplar is meant to stop

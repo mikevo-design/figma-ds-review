@@ -17,6 +17,8 @@ Rules live in [`references/design-system-rules.md`](references/design-system-rul
 node scripts/contrast.test.mjs
 ```
 
+CI runs that file on Node.js 18, 20, and 22. Contrast CLI exit 0 is a pass, exit 1 is a measured fail, and exit 2 is an input error.
+
 ## Pull requests
 
 - One concern per PR.
