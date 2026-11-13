@@ -1,6 +1,6 @@
 # Strict Figma Design System Rules
 
-Version: 2.3  
+Version: 2.4  
 Status: Working standard  
 Language: English  
 Primary use case: Review an existing Figma design system  
@@ -10,9 +10,20 @@ This document is an audit and quality bar for an existing **web** product design
 
 The existing project is evidence, not disposable input. Existing variable IDs, component IDs, published APIs, names, and intentional exceptions must be discovered before any target architecture is applied.
 
-Version 2.3 keeps the construction model from 2.2: a composition hierarchy, a 4 px core grid with a controlled 2 px micro-grid, logical three-layer token architecture, explicit property routing, controlled Slot patterns, exposed nested APIs, Preferred instances, separated state dimensions, Variable-driven Light/Dark, token decisions, and a Figma-to-code map when code is in scope. No individual component receives a privileged reference specification. The assistant must not create a new design-system file from scratch.
+Version 2.4 keeps the 2.3 review model: a composition hierarchy, a 4 px core grid with a controlled 2 px micro-grid, logical three-layer token architecture, explicit property routing, controlled Slot patterns, exposed nested APIs, Preferred instances, separated state dimensions, Variable-driven Light/Dark, token decisions, and a Figma-to-code map when code is in scope. No individual component receives a privileged reference specification. The assistant must not create a new design-system file from scratch. Corrections in 2.4 are limited to accessibility measurement: large-text size, target-size exceptions, and how semi-transparent colors are measured.
+
+### Version 2.4 approved decisions
+
+Where these conflict with 2.3 or 2.2, 2.4 wins.
+
+- Large text for the 3:1 AA gate is at least 24 px regular (18 pt) or at least 18.66 px bold (14 pt). The previous ≥18.5 px bold cutoff is not the gate.
+- Target size follows WCAG 2.2 SC 2.5.8. Below 24 × 24 px is not an automatic fail. Spacing, inline, essential, and equivalent exceptions apply. A 20 × 20 icon button whose 24 px-diameter spacing circles do not intersect other targets is not HIGH. If spacing cannot be confirmed, the check is `unverified` and at most MEDIUM.
+- Semi-transparent foregrounds are composited over the opaque background they sit on before the WCAG 2 ratio. A translucent background is not measured until it is flattened over an opaque layer. An input error is not a contrast failure.
+- Contrast CLI exit 0 is a pass, exit 1 is a measured fail, and exit 2 is bad input. Do not report exit 2 as a HIGH contrast finding.
 
 ### Version 2.3 approved decisions
+
+Where these conflict with 2.4, 2.4 wins.
 
 - Restrict this standard to reviewing and, if asked, repairing an existing file. Remove the blank-file creation workflow.
 - Inspect Variable modes, palettes, type, icons, frames, and component APIs from the file. Do not interview the owner for facts the file already contains.
@@ -27,13 +38,13 @@ Version 2.3 keeps the construction model from 2.2: a composition hierarchy, a 4 
 - This standard reviews one product design system. Do not require domain shelves such as Base, Product, or Marketing. Composition level is mandatory; file pages follow the actual library.
 - This standard is Web only. Do not apply iOS HIG or Android Material constraints. Do not invent `Platform=iOS` or `Platform=Android` modes. A 390 px frame is mobile web unless the file already names a native platform mode.
 - Contrast gate is WCAG 2.2 AA using the same luminance-ratio method as Figma's built-in contrast checker: 4.5:1 normal text, 3:1 large text, 3:1 non-text UI. Do not fail a review on APCA. Do not pass contrast by eye. Unmeasured pairs are `unverified`.
-- Hit area: below 24 × 24 px is a fail. Primary controls on mobile web should be 44 × 44 px. Dense desktop-only controls may stay at 24 × 24 px when that exception is recorded. Measure the component frame, not the glyph. Unmeasured sizes are `unverified`.
+- Hit area: below 24 × 24 px is a fail. Primary controls on mobile web should be 44 × 44 px. Dense desktop-only controls may stay at 24 × 24 px when that exception is recorded. Measure the component frame, not the glyph. Unmeasured sizes are `unverified`. Superseded by the Version 2.4 target-size decision.
 - Do not interview for library consumers during review. Unknown external consumers are not a finding. Before deleting or replacing a published asset, search instances in this file or get owner approval.
 - Live Figma inspection (plugin or MCP) is the source of truth. Screenshots are optional visual evidence for a disputed layout, not a review gate. Missing screenshots do not fail a review.
 
 ### Version 2.2 approved decisions
 
-Where these conflict with 2.3, 2.3 wins. Hybrid domain shelves (Base / Product / Marketing) were dropped in 2.3; composition level remains mandatory.
+Where these conflict with 2.3, 2.3 wins. Where these conflict with 2.4, 2.4 wins. Hybrid domain shelves (Base / Product / Marketing) were dropped in 2.3; composition level remains mandatory.
 
 - Keep `4 px` as the structural grid and allow a tokenized `2 px` micro-grid only for small internal details.
 - Keep percentage line height and percentage letter spacing mandatory in Figma.
@@ -789,13 +800,15 @@ The failing and passing gate is WCAG 2 contrast ratio, the same method Figma's b
 | Content | AA gate (this standard) | AAA (record only, do not fail AA-targeted files) |
 |---|---|---|
 | Normal text | 4.5:1 | 7:1 |
-| Large text (≥24 px, or ≥18.5 px bold) | 3:1 | 4.5:1 |
+| Large text (≥24 px regular / 18 pt, or ≥18.66 px bold / 14 pt) | 3:1 | 4.5:1 |
 | Non-text UI: icons, borders, focus rings | 3:1 | — |
 
 Rules:
 
+- Large text is at least 24 px regular (18 pt) or at least 18.66 px bold (14 pt). At 1 pt = 96/72 px, 18 pt is 24 px and 14 pt is 18.66 px. Text below those sizes uses the 4.5:1 normal-text gate. Do not use 18.5 px as the bold cutoff.
 - Measure the foreground against the background it actually sits on, in both Light and Dark.
-- Prefer a project contrast script when one ships with this standard's skill repository. Otherwise use Figma's built-in checker or an equivalent WCAG 2 luminance-ratio calculation.
+- Semi-transparent foregrounds (overlay, disabled, `opacity/*`, `#RRGGBBAA`, `#RGBA`) are measured by compositing the foreground over the opaque background it sits on, then running the WCAG 2 ratio on that opaque pair. Straight-alpha source-over: the background must be opaque. If the surface itself is translucent, flatten it over the next opaque layer first. If that stack cannot be resolved, mark the pair `unverified`.
+- Prefer a project contrast script when one ships with this standard's skill repository. Otherwise use Figma's built-in checker or an equivalent WCAG 2 luminance-ratio calculation. Script exit 0 is a pass. Exit 1 is a measured contrast fail. Exit 2 is an input error (invalid color, unknown kind, or a translucent background) and is not a HIGH contrast finding; fix the input or mark the pair `unverified`.
 - Never pass or fail a pair by visual guess. If the pair was not measured, mark it `unverified`.
 - APCA (Lc) may be reported as extra signal. It must not fail a library whose target is WCAG 2.2 AA.
 - Do not send the assistant to a third-party contrast website as a required step.
@@ -804,7 +817,15 @@ Global rules:
 
 - Meaning must never rely on color alone.
 - Keyboard operation is mandatory for interactive patterns and must be documented on the family page. The assistant does not need to implement keyboard behavior in Figma.
-- Hit area is measured on the component frame, not the icon glyph. Below 24 × 24 px is a fail (WCAG 2.2 AA). Primary controls that appear on mobile web should be at least 44 × 44 px. Dense pointer/desktop-only controls may use 24 × 24 px when that exception is documented on the family. Unmeasured frames are `unverified`. This is a web hit-area check, not an iOS HIG audit.
+- Hit area is measured on the component frame, not the icon glyph (WCAG 2.2 SC 2.5.8, AA). The minimum is 24 × 24 CSS px unless one of these exceptions applies:
+  - Spacing: a target under 24 × 24 px still passes when a 24 px-diameter circle centered on its bounding box does not intersect another target or the circle of another undersized target. A 20 × 20 icon button with that spacing is not a failure and is not HIGH.
+  - Inline: the target is in a sentence, or its size is otherwise constrained by the line-height of non-target text.
+  - Essential: a particular presentation of the target is essential to the information being conveyed, and the exception is recorded on the family.
+  - Equivalent: the same function is available through another control on the same page that meets this criterion.
+- If the frame is under 24 × 24 px and spacing cannot be confirmed, do not pass the check and do not score HIGH. Mark it `unverified`. A finding, if one is recorded, is at most MEDIUM.
+- A measured target under 24 × 24 px whose 24 px circles intersect, with no inline, essential, or equivalent exception, is a HIGH fail.
+- Primary controls that appear on mobile web should be at least 44 × 44 px. Below that size, severity is MEDIUM when the control still meets 24 × 24 px or a 2.5.8 exception, and HIGH only when the 24 × 24 gate fails with no exception. Dense pointer/desktop-only controls may use 24 × 24 px when that exception is documented on the family.
+- Unmeasured frames are `unverified`. This is a web hit-area check, not an iOS HIG audit. An unmodified user-agent control is out of scope.
 
 ### 13.1 Per-family Figma checklist
 
@@ -817,7 +838,7 @@ Run this on every public interactive family during review. Decorative or non-int
 - An icon-only action has a visible name on the family page (tooltip, adjacent text, or a documented accessible name). Do not leave a bare icon as the only identifier.
 - Disabled is distinct from default and from loading. Loading keeps the control geometry and a visible name; the control does not collapse.
 - Error includes visible message text, not only a red border or red icon.
-- Hit area: frame ≥ 24 × 24 px always; ≥ 44 × 44 px for primary mobile-web controls; 24 × 24 px allowed for documented desktop-only density. Unmeasured frames are `unverified`.
+- Hit area (WCAG 2.5.8): frame ≥ 24 × 24 px, or a confirmed spacing, inline, essential, or equivalent exception. A 20 × 20 control with confirmed spacing (24 px-diameter circles do not intersect) is not a fail. Under 24 × 24 px with unconfirmed spacing is `unverified` and at most MEDIUM, not HIGH. Primary mobile-web controls should be ≥ 44 × 44 px (MEDIUM when the 24 × 24 gate or an exception still holds). 24 × 24 px is allowed for documented desktop-only density. Unmeasured frames are `unverified`.
 - The family page states the intended keyboard keys (for example Enter, Space, Escape, arrows) without requiring a working prototype.
 - Components with different accessibility roles, keyboard models, or selection models are not merged into one set solely because they look similar.
 
@@ -1048,12 +1069,12 @@ Use this block only when `repairRequested: true`.
 - [ ] WCAG 2.2 AA is the scoring target unless the owner recorded a different target.
 - [ ] Every public interactive family was scored with Section 13.1.
 - [ ] Focus is visible and distinct from hover in Light and Dark.
-- [ ] Contrast was measured with WCAG 2 ratios (4.5:1 / 3:1), not by eye. Unmeasured pairs are `unverified`. APCA did not fail an AA-targeted file.
+- [ ] Contrast was measured with WCAG 2 ratios (4.5:1 normal; 3:1 for large text at ≥24 px / 18 pt regular or ≥18.66 px / 14 pt bold, and for non-text UI), not by eye. Semi-transparent foregrounds were composited over an opaque background. Unmeasured pairs are `unverified`. A script input error was not scored as a contrast fail. APCA did not fail an AA-targeted file.
 - [ ] Error, success, selected, and disabled do not rely on color alone.
 - [ ] Labels are real text; placeholders are not the only label.
 - [ ] Icon-only actions have a documented visible name.
 - [ ] Error includes message text, not only a red border.
-- [ ] Hit area: no interactive frame below 24 × 24 px; primary mobile-web controls are 44 × 44 px or a desktop-only exception is recorded. Unmeasured frames are `unverified`.
+- [ ] Hit area (WCAG 2.5.8): no interactive frame below 24 × 24 px unless a spacing, inline, essential, or equivalent exception is confirmed. Unconfirmed spacing on an undersized frame is `unverified` and at most MEDIUM, not HIGH. Primary mobile-web controls are 44 × 44 px, or a desktop-only exception is recorded (MEDIUM when a 2.5.8 exception still holds). Unmeasured frames are `unverified`.
 - [ ] Keyboard keys are documented on the family page.
 
 ### Delivery
@@ -1103,7 +1124,7 @@ Missing items in this list are findings. They become repair work only when `repa
 - Light/Dark is controlled through Variable modes unless a structural theme exception is documented;
 - Figma properties, Variables, Slots, and states map to the approved code API when code is in scope;
 - layer hygiene passes;
-- accessibility checks pass against Section 13.1 for every public interactive family;
+- accessibility checks pass against Section 13.1 for every public interactive family, including the WCAG 2.5.8 target-size exceptions (spacing, inline, essential, equivalent);
 - responsive web reference frames from the file are documented; native platform modes were not required;
 - component families, valid matrices, validation benches, and real examples are visible;
 - there are no broken aliases, UI-component Groups, unexplained hidden Frames, hidden alternative-state trees, unexplained empty Frames, or direct forbidden bindings.

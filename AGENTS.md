@@ -10,6 +10,6 @@ This repository is one Agent Skill, not a collection. Cursor, Codex, and Claude 
 
 Do not fork the standard per harness. Do not duplicate §7 or §11 into `SKILL.md`. Do not add a blank-file bootstrap, native iOS/Android rules, or a third-party kit as a required source.
 
-If a 2.2 bullet conflicts with 2.3, 2.3 wins.
+If a 2.2 bullet conflicts with 2.3, 2.3 wins. If a 2.2 or 2.3 bullet conflicts with 2.4, 2.4 wins.
 
 After contrast math changes, run `node scripts/contrast.test.mjs`.

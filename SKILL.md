@@ -8,7 +8,7 @@ description: >-
 license: MIT
 compatibility: Requires live Figma inspect (plugin or MCP). Node.js 18+ for scripts/contrast.mjs.
 metadata:
-  version: "2.3"
+  version: "2.4"
   author: mikevo-design
   standard: references/design-system-rules.md
 ---
@@ -17,7 +17,7 @@ metadata:
 
 Review one existing **web** product design system in Figma. Do not bootstrap a new file. Do not apply iOS HIG or Android Material rules.
 
-Quality bar: [references/design-system-rules.md](references/design-system-rules.md) (v2.3). Load sections by task below. Do not ingest the whole file before every score. The file under review wins over every exemplar.
+Quality bar: [references/design-system-rules.md](references/design-system-rules.md) (v2.4). Load sections by task below. Do not ingest the whole file before every score. The file under review wins over every exemplar.
 
 ## Evidence, not taste
 
@@ -27,8 +27,8 @@ One root cause is one row. A broken alias or missing focus outranks a page-name 
 
 Severity:
 
-- `HIGH` — blocks a task, broken alias, missing focus, contrast fail, primary hit-area fail
-- `MEDIUM` — composition, API, or token naming that harms consistency or migration
+- `HIGH` — blocks a task, broken alias, missing focus, contrast fail (CLI exit 1), target-size fail (under 24×24 px with no WCAG 2.5.8 exception)
+- `MEDIUM` — composition, API, or token naming that harms consistency or migration. A primary mobile-web control under 44×44 px that still meets 24×24 px or a 2.5.8 exception is MEDIUM. An undersized target whose spacing was not measured is `unverified`, not HIGH.
 - `LOW` — isolated polish with little task impact
 
 ## Hard stops
@@ -51,7 +51,7 @@ Severity:
 | Variables and naming | §7. Mapping table: current → layer/name → consumers → risk. Font, frames, and scale come from the file |
 | Composition | §11.1 `Primitive → Atom → Compound → Section → Template → Page`. Not Atomic Design. Do not assemble a new DS |
 | One family | [references/family-exemplar-action.md](references/family-exemplar-action.md) as a decision pattern, not a Button spec |
-| Contrast | [scripts/contrast.mjs](scripts/contrast.mjs) or Figma’s WCAG checker. AA: 4.5:1 normal, 3:1 large and UI |
+| Contrast | [scripts/contrast.mjs](scripts/contrast.mjs) or Figma’s WCAG checker. AA: 4.5:1 normal text; 3:1 large text (≥24 px / 18 pt regular, or ≥18.66 px / 14 pt bold) and non-text UI. Exit 0 pass, 1 measured fail, 2 input error (not a finding) |
 | Gate A done | §17.2. Shape: [references/audit-output.example.md](references/audit-output.example.md) |
 | Repair | §15.2–15.6 only after `repairRequested: true` |
 
@@ -61,8 +61,8 @@ Severity:
 2. Fill the project YAML in the standard from the file (`workflowMode: review-existing`, `platform: web`).
 3. Ask only policy questions in standard §2.2. Default `repairRequested: false`.
 4. Run Gate A. Score against §17.2. Open findings are a valid review, not a failed review.
-5. Contrast: extract token (and sampled component) pairs in Light and Dark. Measure. Unmeasured pairs stay `unverified`.
-6. Hit area: measure the **component frame**, not the glyph. Below 24×24 px = fail. Primary mobile-web controls should be 44×44 px. Documented desktop-only density may stay at 24×24.
+5. Contrast: extract token (and sampled component) pairs in Light and Dark. Measure. Composite a semi-transparent foreground (`#RRGGBBAA`, `#RGBA`, opacity tokens) over the opaque background it sits on. A translucent background is not a pair until it is flattened. Unmeasured pairs stay `unverified`. CLI exit codes: 0 pass, 1 measured fail, 2 input error. Exit 2 is not a HIGH contrast finding.
+6. Hit area: measure the **component frame**, not the glyph (WCAG 2.5.8). Below 24×24 px fails unless a spacing exception (a 24 px-diameter circle centered on the target does not intersect another target), an inline exception, or an essential or equivalent exception applies. A 20×20 icon button with confirmed spacing is not HIGH. If spacing cannot be confirmed, mark `unverified` (at most MEDIUM). Primary mobile-web controls should be 44×44 px (MEDIUM when the 24×24 gate or an exception still holds). Documented desktop-only density may stay at 24×24.
 7. Optional plugin screenshot only when layout, clipping, or Dark appearance is in dispute.
 8. Deliver the audit. Stop unless the owner asks for repair.
 
